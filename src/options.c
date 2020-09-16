@@ -262,6 +262,9 @@ static void usage(const char *argv0, int ret) {
 	    "--blur-background-exclude condition\n"
 	    "  Exclude conditions for background blur.\n"
 	    "\n"
+	    "--inactive-blur\n"
+	    "  Blur the foreground of inactive windows.\n"
+	    "\n"
 	    "--resize-damage integer\n"
 	    "  Resize damaged region by a specific number of pixels. A positive\n"
 	    "  value enlarges it while a negative one shrinks it. Useful for\n"
@@ -456,6 +459,7 @@ static const struct option longopts[] = {
     {"corner-radius", required_argument, NULL, 333},
     {"rounded-corners-exclude", required_argument, NULL, 334},
     {"clip-shadow-above", required_argument, NULL, 335},
+    {"inactive-blur", no_argument, NULL, 336},
     {"experimental-backends", no_argument, NULL, 733},
     {"monitor-repaint", no_argument, NULL, 800},
     {"diagnostics", no_argument, NULL, 801},
@@ -886,6 +890,10 @@ bool get_cfg(options_t *opt, int argc, char *const *argv, bool shadow_enable,
 		case 335:
 			// --clip-shadow-above
 			condlst_add(&opt->shadow_clip_list, optarg);
+			break;
+		case 336:
+			// --inactive-blur
+			opt->inactive_blur = true;
 			break;
 		P_CASEBOOL(733, experimental_backends);
 		P_CASEBOOL(800, monitor_repaint);
