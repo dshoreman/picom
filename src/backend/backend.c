@@ -420,7 +420,7 @@ void paint_all_new(session_t *ps, struct managed_win *t, bool ignore_damage) {
 				double blur_opacity = 1;
 				ps->backend_data->ops->blur(ps->backend_data, blur_opacity,
 				                            ps->backend_blur_context,
-				                            &reg_noframe, &reg_visible);
+				                            &reg_noframe, &reg_noframe);
 			}
 		}
 	skip:
