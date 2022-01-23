@@ -1145,6 +1145,10 @@ void win_on_factor_change(session_t *ps, struct managed_win *w) {
 		    c2_match(ps, w, ps->o.unredir_if_possible_blacklist, NULL);
 	}
 
+	if (ps->o.inactive_blur && !w->focused) {
+		w->blur_foreground = !ps->o.inactive_blur_list ||
+		    c2_match(ps, w, ps->o.inactive_blur_list, NULL);
+	}
 	w->fade_excluded = c2_match(ps, w, ps->o.fade_blacklist, NULL);
 
 	win_update_opacity_target(ps, w);
