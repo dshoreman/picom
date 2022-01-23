@@ -199,7 +199,7 @@ void paint_all_new(session_t *ps, struct managed_win *t, bool ignore_damage) {
 		 * option */
 		auto real_win_mode = w->mode;
 
-		if (w->blur_background &&
+		if (w->blur_background && !w->blur_foreground &&
 		    (ps->o.force_win_blend || real_win_mode == WMODE_TRANS ||
 		     (ps->o.blur_background_frame && real_win_mode == WMODE_FRAME_TRANS))) {
 			// Minimize the region we try to blur, if the window
@@ -413,8 +413,6 @@ void paint_all_new(session_t *ps, struct managed_win *t, bool ignore_damage) {
 				// FIXME Think more about combining blur w/ opacity
 				// FIXME Don't hardcode opacity
 				//        - needs to be set when focus_mode set to true
-				//        - don't blur background when foreground is
-				//          getting blurred to speed it up
 				double blur_opacity = 1;
 				ps->backend_data->ops->blur(
 				    ps->backend_data, blur_opacity, ps->backend_blur_context,
