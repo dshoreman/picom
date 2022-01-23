@@ -394,6 +394,18 @@ void paint_all_new(session_t *ps, struct managed_win *t, bool ignore_damage) {
 				pixman_region32_fini(&reg_bound_local);
 			}
 
+			// Blur window
+			if (w->blur_foreground) {
+				assert(ps->o.blur_method != BLUR_METHOD_NONE);
+				// FIXME Think more about combining blur w/ opacity
+				// FIXME Don't hardcode opacity
+				//        - needs to be set when focus_mode set to true
+				double blur_opacity = 1;
+				ps->backend_data->ops->blur(
+				    ps->backend_data, blur_opacity, ps->backend_blur_context,
+				    &reg_paint_in_bound, &reg_visible);
+			}
+
 			auto new_img = ps->backend_data->ops->clone_image(
 			    ps->backend_data, w->win_image, &reg_visible_local);
 			auto reg_frame = win_get_region_frame_local_by_val(w);
@@ -406,18 +418,6 @@ void paint_all_new(session_t *ps, struct managed_win *t, bool ignore_damage) {
 			                               &reg_visible);
 			ps->backend_data->ops->release_image(ps->backend_data, new_img);
 			pixman_region32_fini(&reg_visible_local);
-
-			// Blur window
-			if (w->blur_foreground) {
-				assert(ps->o.blur_method != BLUR_METHOD_NONE);
-				// FIXME Think more about combining blur w/ opacity
-				// FIXME Don't hardcode opacity
-				//        - needs to be set when focus_mode set to true
-				double blur_opacity = 1;
-				ps->backend_data->ops->blur(
-				    ps->backend_data, blur_opacity, ps->backend_blur_context,
-				    &reg_paint_in_bound, &reg_visible);
-			}
 		}
 	skip:
 		pixman_region32_fini(&reg_bound);
