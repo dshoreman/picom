@@ -1923,6 +1923,7 @@ static session_t *session_init(int argc, char **argv, Display *dpy,
 	      c2_list_postprocess(ps, ps->o.shadow_clip_list) &&
 	      c2_list_postprocess(ps, ps->o.fade_blacklist) &&
 	      c2_list_postprocess(ps, ps->o.blur_background_blacklist) &&
+	      c2_list_postprocess(ps, ps->o.inactive_blur_list) &&
 	      c2_list_postprocess(ps, ps->o.invert_color_list) &&
 	      c2_list_postprocess(ps, ps->o.opacity_rules) &&
 	      c2_list_postprocess(ps, ps->o.rounded_corners_blacklist) &&
@@ -2299,6 +2300,7 @@ static void session_destroy(session_t *ps) {
 	free_wincondlst(&ps->o.shadow_clip_list);
 	free_wincondlst(&ps->o.fade_blacklist);
 	free_wincondlst(&ps->o.focus_blacklist);
+	free_wincondlst(&ps->o.inactive_blur_list);
 	free_wincondlst(&ps->o.invert_color_list);
 	free_wincondlst(&ps->o.blur_background_blacklist);
 	free_wincondlst(&ps->o.opacity_rules);

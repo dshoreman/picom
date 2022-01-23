@@ -212,6 +212,8 @@ typedef struct options {
 	int blur_kernel_count;
 	/// Whether to blur inactive windows
 	bool inactive_blur;
+	/// List of windows that should be blurred out when inactive.
+	c2_lptr_t *inactive_blur_list;
 	/// How much to dim an inactive window. 0.0 - 1.0, 0 to disable.
 	double inactive_dim;
 	/// Whether to use fixed inactive dim opacity, instead of deciding

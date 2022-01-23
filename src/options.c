@@ -264,6 +264,10 @@ static void usage(const char *argv0, int ret) {
 	    "\n"
 	    "--inactive-blur\n"
 	    "  Blur the foreground of inactive windows.\n"
+	    "--inactive-blur-include condition\n"
+	    "  Conditions for windows that should be fully blurred when inactive.\n"
+	    "  When --inactive-blur is enabled without an --inactive-blur-include\n"
+	    "  condition, the foreground of ALL inactive windows will be blurred.\n"
 	    "\n"
 	    "--resize-damage integer\n"
 	    "  Resize damaged region by a specific number of pixels. A positive\n"
@@ -460,6 +464,7 @@ static const struct option longopts[] = {
     {"rounded-corners-exclude", required_argument, NULL, 334},
     {"clip-shadow-above", required_argument, NULL, 335},
     {"inactive-blur", no_argument, NULL, 336},
+    {"inactive-blur-include", required_argument, NULL, 337},
     {"experimental-backends", no_argument, NULL, 733},
     {"monitor-repaint", no_argument, NULL, 800},
     {"diagnostics", no_argument, NULL, 801},
@@ -894,6 +899,10 @@ bool get_cfg(options_t *opt, int argc, char *const *argv, bool shadow_enable,
 		case 336:
 			// --inactive-blur
 			opt->inactive_blur = true;
+			break;
+		case 337:
+			// --inactive-blur-include
+			condlst_add(&opt->inactive_blur_list, optarg);
 			break;
 		P_CASEBOOL(733, experimental_backends);
 		P_CASEBOOL(800, monitor_repaint);
