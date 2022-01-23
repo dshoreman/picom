@@ -412,8 +412,7 @@ void paint_all_new(session_t *ps, struct managed_win *t, bool ignore_damage) {
 				assert(ps->o.blur_method != BLUR_METHOD_NONE);
 				region_t reg_noframe;
 				win_get_region_noframe_local(w, &reg_noframe);
-				pixman_region32_translate(&reg_noframe, w->g.x, w->g.y);
-				pixman_region32_subtract(&reg_noframe, &reg_noframe, &reg_visible);
+				pixman_region32_subtract(&reg_noframe, &reg_noframe, &reg_frame);
 
 				// FIXME Think more about combining blur w/ opacity
 				// FIXME Don't hardcode opacity
